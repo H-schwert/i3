@@ -1,0 +1,20 @@
+#!/bin/bash
+
+# Create a button to toggle play/pause on the mpd server if it is running.
+MPC=$(mpc)
+if [[ $MPC != 'error: Connection refused' ]]; then
+        STATE=$(echo -e $MPC | sed -n '1p' | cut -d "[" -f2 | cut -d "]" -f1)
+        if [[ $STATE == "playing" ]]; then
+                echo ""
+                echo ""
+                if [[ $BLOCK_BUTTON == '1' ]]; then
+                        mpc pause
+                fi
+        elif [[ $STATE == "paused" ]]; then
+                echo ""
+                echo ""
+                if [[ $BLOCK_BUTTON == '1' ]]; then
+                        mpc play
+                fi
+        fi
+fi

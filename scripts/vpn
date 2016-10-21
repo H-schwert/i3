@@ -1,0 +1,5 @@
+#!/bin/bash
+
+if [[ `sudo ifconfig | grep tun0` ]]; then
+        echo " VPN"
+fi

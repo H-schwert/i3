@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Show the current playing track on the mpd server.
+# If the playlist is empty, display just a symbol.
+# Clicking the track/symbol will open ncmpcpp.
+
+TRACK=$(mpc -f "[[[%title% - ]%artist% - ]%album%]" | head -1)
+
+# If the mpd server is not connected, display nothing in i3bar.
+if [[ "${TRACK}" =~ "error:" ]] | [[ "${TRACK}" == "" ]] ; then
+        TRACK=""
+else
+        TRACK=""
+fi
+
+# If the mpd servier is connected but nothing is in the playlist, display just
+# a music symbol, which can be clicked to open ncmpcpp.
+if [[ $TRACK == *volume:* ]]; then
+        TRACK=""
+fi
+
+if [[ $BLOCK_BUTTON == '1' ]]; then
+       urxvt -title "float" -hold -e ncmpcpp -c ~/.i3/ncmpcpp.conf
+fi
+if [[ $BLOCK_BUTTON == '3' ]]; then
+        TITLE=$(mpc -f "[%title%]" | head -1)
+        ARTIST=$(mpc -f "[%artist%]" | head -1)
+        ALBUM=$(mpc -f "[%album%]" | head -1)
+        notify-send "`echo -e $TITLE'\n'$ARTIST'\n'$ALBUM`" \
+                -i /usr/share/icons/Numix-Circle/48x48/apps/lxmusic.svg
+fi
+
+echo $TRACK | sed -e 's/?/\?/g'
+echo $TRACK | sed -e 's/?/\?/g'

@@ -1,0 +1,24 @@
+#!/bin/bash
+
+# If ethernet is connected, show symbol as green.
+# If it's not connected, show it as red. If it's dormant, show as yellow.
+
+eth_state="$(cat /sys/class/net/enp5s0/operstate)"
+
+if [[ "$eth_state" == "up" ]]; then
+        echo ""
+        echo ""
+elif [[ "$eth_state" == "dormant" ]]; then
+        echo ""
+        echo ""
+        echo "#DC322F"
+fi
+
+ip_addr=`echo "IP: "$(hostname -I)`
+current_mac=`echo "MAC: "$(ifconfig enp5s0 | head -1 | sed -e 's/.*HWaddr //')`
+
+if [[ $BLOCK_BUTTON == '1' ]]; then
+        notify-send "`echo -e $ip_addr'\n'$current_mac`"\
+                -i /usr/share/icons/Numix-Circle/48x48/apps/networkmanager.svg
+fi
+

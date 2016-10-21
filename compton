@@ -1,0 +1,51 @@
+# Compton settings:
+
+###################
+# Window shadows: #
+###################
+shadow = true;
+clear-shadow = true;  # No shadows through the window if transparent.
+no-dock-shadow = true; # No shadow from i3bar.
+no-dnd-shadow-shadow = true; # No shadows on Drag and Drop windows.
+shadow-ignore-shaped = true; # No shadows on shaped windows.
+shadow-radius = 12; # The blur radius for the shadows (default 12).
+shadow-offset-x = -15; # The left offset for shadows (default -15).
+shadow-offset-y = -15; # The top offset for shadows (default -15).
+shadow-opacity = 0.75; # The translucency for shadows (default .75).
+
+# Do not have shadows on the following apps:
+shadow-exclude = [
+  "!focused",  # no shadows on unfocussed windows
+  "class_g ?= 'Notify-osd'",
+  "class_g ?= 'Firefox'",
+  "class_g ?= 'Iceweasel'",
+  "class_g ?= 'Chrome'",
+  "class_g ?= 'google-chrome'",
+  "class_g ?= 'Chromium'",
+  "class_g ?= 'Nautilus'",
+  "class_g ?= 'Evince'",
+  "class_g ?= 'Okular'"
+];
+
+########################
+# Opacity/Transparancy #
+########################
+# menu-opacity = 0.95;  # Default is 1.0
+inactive-opacity = 1.0;
+detect-client-opacity = true;
+blur-background-fixed = false;
+
+########################
+# Window type settings #
+########################
+wintypes:
+{
+  tooltip = { fade = true; shadow = true; opacity = 0.95; focus = true; };
+  # For transparent i3bar:
+  # dock = { opacity = 0.85; };
+};
+
+#########
+# Other #
+#########
+backend = "xrender"

@@ -1,0 +1,51 @@
+#!/bin/bash
+
+# Display startup script.
+# Different settings for different laptops.
+# If the monitor is connected via HDMI, display only that.
+# If the monitor is disconnected, display from laptop screen only.
+
+HOST=$(hostname)
+
+if [[ "$HOST" == "debian" ]]; then
+        LAPTOP=eDP1
+        LAPTOP_RES_HDMI_ON=2560x1440
+        LAPTOP_RES_HDMI_OFF=2560x1440
+        EXTERNAL=HDMI2
+elif [[ "$HOST" == "m73" ]]; then
+        bash /home/awesam/.config/i3/scripts/monitor-fonts
+#        xrandr --output HDMI1 --mode 1920x1080 --left-of VGA1 \
+#                --output VGA1 --mode 1280x1024 \
+#                --output HDMI1 --primary
+        xrandr --output HDMI1 --mode 1920x1080 --output VGA1 --off
+        exit 1
+else
+        exit 1
+fi
+
+function dual-displays {
+        xrandr --output $EXTERNAL --mode 1920x1080 --primary --left-of $LAPTOP \
+                --output $LAPTOP --mode $LAPTOP_RES_HDMI_ON
+}
+
+function monitor-only {
+        xrandr --output $EXTERNAL --mode 1920x1080 --output $LAPTOP --off
+}
+
+function display-on-laptop-only {
+        xrandr --output $EXTERNAL --off --output $LAPTOP \
+                --mode $LAPTOP_RES_HDMI_OFF
+}
+
+function hdmi-is-connected {
+        ! xrandr | grep "^$EXTERNAL" | grep disconnected
+}
+
+if hdmi-is-connected & [[ "$HOST" == "debian" ]]; then
+        monitor-only & monitor-fonts
+        # dual-displays
+elif hdmi-is-connected & [[ "$HOST" == "acer" ]]; then
+        dual-displays
+else
+        display-on-laptop-only & laptop-fonts
+fi
