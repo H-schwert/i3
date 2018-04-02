@@ -10,7 +10,7 @@ if [[ "$HOST" == "m73" ]]; then
         exit 1
 fi
 
-if [[ "$HOST" == "awesam-N550JV" ]]; then
+if [[ "$HOST" == "awesam" ]]; then
         POWER=$(acpi -b)
         if [[ "$POWER" == "" ]]; then
                 exit 1
@@ -35,19 +35,19 @@ fi
 if [[ "$STATE" == "charging" ]]; then
         COLOR=""
         if [[ "$PERCENTAGE" -lt "15" ]]; then
-                SYMBOL=""
+                SYMBOL="e"
         elif [[ "$PERCENTAGE" -lt "30" ]]; then
-                SYMBOL=""
+                SYMBOL="E"
         elif [[ "$PERCENTAGE" -lt "45" ]]; then
-                SYMBOL=""
+                SYMBOL="m"
         elif [[ "$PERCENTAGE" -lt "60" ]]; then
-                SYMBOL=""
+                SYMBOL="M"
         elif [[ "$PERCENTAGE" -lt "75" ]]; then
-                SYMBOL=""
+                SYMBOL="f"
         elif [[ "$PERCENTAGE" -lt "90" ]]; then
-                SYMBOL=""
+                SYMBOL="F"
         else
-                SYMBOL=""
+                SYMBOL="D"
         fi
 elif [[ "$STATE" == "discharging" ]]; then
         if [[ "$PERCENTAGE" -lt "10" ]]; then
@@ -84,10 +84,10 @@ elif [[ "$STATE" == "discharging" ]]; then
                 SYMBOL=""
         fi
 elif [[ "$STATE" == "full" ]] | [[ "$STATE" == "unknown" ]]; then
-        SYMBOL=""
+        SYMBOL="F"
         COLOR=""
 else
-        SYMBOL=""
+        SYMBOL="C"
         COLOR=""
 fi
 

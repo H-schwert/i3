@@ -7,25 +7,15 @@
 
 HOST=$(hostname)
 
-if [[ "$HOST" == "debian" ]]; then
-        LAPTOP=eDP1
-        LAPTOP_RES_HDMI_ON=2560x1440
+        LAPTOP=eDP-1
+        LAPTOP_RES_HDMI_ON=1920x1080
         LAPTOP_RES_HDMI_OFF=2560x1440
-        EXTERNAL=HDMI2
-elif [[ "$HOST" == "m73" ]]; then
-        bash /home/awesam/.config/i3/scripts/monitor-fonts
-#        xrandr --output HDMI1 --mode 1920x1080 --left-of VGA1 \
-#                --output VGA1 --mode 1280x1024 \
-#                --output HDMI1 --primary
-        xrandr --output HDMI1 --mode 1920x1080 --output VGA1 --off
-        exit 1
-else
-        exit 1
-fi
+        EXTERNAL=HDMI-2
 
 function dual-displays {
-        xrandr --output $EXTERNAL --mode 1920x1080 --primary --left-of $LAPTOP \
-                --output $LAPTOP --mode $LAPTOP_RES_HDMI_ON
+        xrandr --output $LAPTOP --mode $LAPTOP_RES_HDMI_ON \
+               --output $EXTERNAL --mode 1360x768 --left-of $LAPTOP 
+                #	workspace 1 output HDMI-2
 }
 
 function monitor-only {
@@ -34,7 +24,7 @@ function monitor-only {
 
 function display-on-laptop-only {
         xrandr --output $EXTERNAL --off --output $LAPTOP \
-                --mode $LAPTOP_RES_HDMI_OFF
+                --mode $LAPTOP_RES_HDMI_ON
 }
 
 function hdmi-is-connected {
@@ -44,8 +34,9 @@ function hdmi-is-connected {
 if hdmi-is-connected & [[ "$HOST" == "debian" ]]; then
         monitor-only & monitor-fonts
         # dual-displays
-elif hdmi-is-connected & [[ "$HOST" == "acer" ]]; then
+elif hdmi-is-connected; then
         dual-displays
 else
-        display-on-laptop-only & laptop-fonts
+        display-on-laptop-only 
+	#& laptop-fonts
 fi

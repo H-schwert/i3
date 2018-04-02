@@ -1,0 +1,10 @@
+#!/bin/bash
+
+BV=$(cat /sys/class/backlight/intel_backlight/brightness)
+BVN=$(( $BV+200 ))
+
+if [[ $BV -le 4682 ]]; then
+	`echo $BVN | tee /sys/class/backlight/intel_backlight/brightness`
+else
+	`echo $BV | tee /sys/class/backlight/intel_backlight/brightness`
+fi

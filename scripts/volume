@@ -21,18 +21,18 @@ esac
 
 # # What to display in i3bar:
 if [[ $STATE == '[off]' ]]; then
-        echo ""
+        echo "O"
         exit 0
 else
         VOLNUM=$(echo -e $VOLUME | egrep -o "[0-9]+")
         if [ $VOLNUM -lt "33" ]; then
-                echo ""$VOLUME
+                echo "V"$VOLUME
                 exit 0
         elif [ $VOLNUM -lt "66" ]; then
-                echo ""$VOLUME
+                echo "V"$VOLUME
                 exit 0
         else
-                echo ""$VOLUME
+                echo "V"$VOLUME
                 exit 0
         fi
 fi

@@ -27,17 +27,17 @@ else
         wlan_state="$(cat /sys/class/net/wlp4s0/operstate)"
 
         if [ "$wlan_state" = "up" ]; then
-                echo ""
-                echo ""
+                echo "U"
+                echo "U"
                 exit 0
         elif [ "$wlan_state" = "down" ]; then
-                echo ""
-                echo ""
+                echo "D"
+                echo "D"
                 echo "#DC322F"
                 exit 0
         elif [ "$wlan_state" = "dormant" ]; then
-                echo ""
-                echo ""
+                echo "S"
+                echo "S"
                 echo "#F99157"
                 exit 0
         fi
