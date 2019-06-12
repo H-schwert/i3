@@ -10,7 +10,7 @@ if [[ "$HOST" == "m73" ]]; then
         exit 1
 fi
 
-if [[ "$HOST" == "awesam-N550JV" ]]; then
+if [[ "$HOST" == "hreitani" ]]; then
         POWER=$(acpi -b)
         if [[ "$POWER" == "" ]]; then
                 exit 1
@@ -84,10 +84,10 @@ elif [[ "$STATE" == "discharging" ]]; then
                 SYMBOL=""
         fi
 elif [[ "$STATE" == "full" ]] | [[ "$STATE" == "unknown" ]]; then
-        SYMBOL=""
+        SYMBOL=""
         COLOR=""
 else
-        SYMBOL=""
+        SYMBOL=""
         COLOR=""
 fi
 

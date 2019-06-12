@@ -1,19 +1,19 @@
 # Super/Windows key is $mod
-set $mod Mod4
+set $mod Mod1
 
 font pango: Futura Bk BT, Material Design Icons 13
 
 # Shortcuts to open common apps:
-bindsym $mod+Return exec mate-terminal
-bindsym Ctrl+Mod1+t exec xfce4-terminal
-bindsym $mod+t exec mate-terminal -title "float" -geometry 85x24
-for_window [instance="mate-terminal" title="float"] floating enable
+bindsym $mod+Return exec gnome-terminal
+bindsym Ctrl+Mod1+t exec mate-terminal
+bindsym $mod+t exec gnome-terminal -title "float" -geometry 85x24
+for_window [instance="gnome-terminal" title="float"] floating enable
 #bindsym $mod+Ctrl+f exec nautilus --no-desktop -g 860x480
 bindsym $mod+Ctrl+e exec xdg-open ~/
 #bindsym $mod+Ctrl+x exec iceweasel
 
-bindsym Print exec scrot -q 100 -b '%Y:%m:%d:%H:%M:%S.png' -e 'mv $f ~/Pictures/Screens'  # Fn+t on X1 Carbon
-bindsym $mod+Print exec shutter -s  # For screenshot selections
+bindsym Print exec scrot -q 100 -b '%Y:%m:%d:%H:%M:%S.png' -e 'mv $f ~/Pictures/Screens/'  # Fn+t on X1 Carbon
+bindsym $mod+Print exec scrot -s -q 100 -b '%Y:%m:%d:%H:%M:%S.png' -e 'mv $f ~/Pictures/Screens/'  # Fn+t on X1 Carbon
 
 # Floating windows by default:
 for_window [instance="chrome_app_list" window_role="bubble"] floating enable
@@ -24,16 +24,16 @@ for_window [instance="chrome_app_list" window_role="bubble"] floating enable
 #for_window [title="Pocket Casts" class="chrome"] floating enable; move position center
 #for_window [class="Florence"] floating enable
 #for_window [instance="gnome-tweak-tool"] floating enable
-for_window [instance="transmission-gtk"] floating enable
+#for_window [instance="transmission-gtk"] floating enable
 
 # Shortcuts for scripts:
-bindsym $mod+F8 exec xrandr --auto
+bindsym $mod+F7 exec xrandr --auto
 #bindsym $mod+Ctrl+w exec ~/.config/i3/scripts/set-random-desktop-background
 #bindsym Ctrl+Mod1+s exec ~/.config/i3/scripts/suspend-and-lock
 
 # Kill focused window (add Alt+F4 as well):
 bindsym $mod+Shift+q kill
-bindsym Mod1+F4 kill
+#bindsym Mod1+F4 kill
 #bindsym $mod+Control+Shift+k focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, focus parent, kill
 
 # Keybindings to add and remove i3-gaps:
@@ -47,17 +47,17 @@ floating_modifier $mod
 
 # Adjust volume up and down with a notification:
 bindsym XF86AudioRaiseVolume exec amixer -q -D pulse set Master on 5%+ unmute & exec ~/.config/i3/scripts/vol-notify
-bindsym Mod4+F12 exec amixer -q -D pulse set Master on 5%+ unmute & exec ~/.config/i3/scripts/vol-notify
+bindsym $mod+F3 exec amixer -q -D pulse set Master on 5%+ unmute & exec ~/.config/i3/scripts/vol-notify
 bindsym XF86AudioLowerVolume exec amixer -q -D pulse set Master 5%- unmute & exec ~/.config/i3/scripts/vol-notify
-bindsym Mod4+F11 exec amixer -q -D pulse set Master 5%- unmute & exec ~/.config/i3/scripts/vol-notify
+bindsym $mod+F2 exec amixer -q -D pulse set Master 5%- unmute & exec ~/.config/i3/scripts/vol-notify
 bindsym XF86AudioMute exec amixer -q -D pulse set Master toggle & exec ~/.config/i3/scripts/vol-notify
-bindsym Mod4+F10 exec amixer -q -D pulse set Master toggle & exec ~/.config/i3/scripts/vol-notify
+bindsym $mod+F1 exec amixer -q -D pulse set Master toggle & exec ~/.config/i3/scripts/vol-notify
 
 # Change brightness
 bindsym XF86MonBrightnessDown exec xbacklight -time 10 -dec 10 & exec ~/.config/i3/scripts/brightness-notify
-bindsym Mod4+F5 exec xbacklight -time 10 -dec 10 & exec ~/.config/i3/scripts/brightness-notify
+bindsym $mod+F5 exec xbacklight -time 10 -dec 10 & exec ~/.config/i3/scripts/brightness-notify
 bindsym XF86MonBrightnessUp exec xbacklight -time 10 -inc 10 & exec ~/.config/i3/scripts/brightness-notify
-bindsym Mod4+F6 exec xbacklight -time 10 -inc 10 & exec ~/.config/i3/scripts/brightness-notify
+bindsym $mod+F6 exec xbacklight -time 10 -inc 10 & exec ~/.config/i3/scripts/brightness-notify
 
 # Shortcut to pause Spotify, Rhythmbox, etc.
 bindsym Mod1+Shift+XF86AudioMute exec playerctl play-pause
@@ -190,9 +190,13 @@ bindsym $mod+r mode "resize"
 bindsym $mod+Ctrl+l exec ~/.config/i3/scripts/blurred-lock
 
 # Display startup script:
+exec --no-startup-id  bash setxkbmap -option caps:swapescape
+
+exec --no-startup-id  bash pidgin 
+
 exec --no-startup-id  bash ~/.config/i3/scripts/display-startup
 
-exec --no-startup-id sleep 1; feh --bg-scale ~/Pictures/morecoffee.png
+exec --no-startup-id sleep 1; watch -n 1200 feh --randomize --bg-scale ~/Pictures/*
 
 new_window none
 
@@ -211,9 +215,7 @@ client.focused          $selected $selected $white $grey
 client.focused_inactive $selected $selected $text $grey
 client.unfocused        $background $background $text $grey
 bar {
-   status_command SCRIPT_DIR=/home/awesam/.config/i3/scripts i3blocks -c /home/awesam/.config/i3/i3blocks.conf
-#   status_command i3blocks -c ~/.config/i3/i3blocks.conf
-#    status_command i3blocks
+   status_command SCRIPT_DIR=/home/hreitani/.config/i3/scripts i3blocks -c /home/hreitani/.config/i3/i3blocks.conf
 
 #  font pango:Cousine, FontAwesome 14
 #  position top
@@ -232,14 +234,14 @@ bar {
 hide_edge_borders both
 
 #dmenu:
-bindsym $mod+d exec rofi -show run -bg "#222222" -fg "#2ECC71" -hlbg "#445544" -hlfg "#2EEE71" -bw 4 -eh 1 -font "Roboto Slab 18" -opacity "80" -lines 8 -line-margin 4 -width 100 -padding 160 -terminal xfce4-terminal
+bindsym $mod+d exec rofi -show run -bg "#222222" -fg "#2ECC71" -hlbg "#445544" -hlfg "#2EEE71" -bw 4 -eh 1 -font "Roboto Slab 18" -opacity "80" -lines 8 -line-margin 4 -width 100 -padding 160 -terminal gnome-terminal
 
 # Startup programs:
 exec nitrogen --restore
 exec --no-startup-id numlockx on
 exec --no-startup-id xset -b # turn off beeps
-exec --no-startup-id "bash -c 'if ! [[ `cat /sys/class/net/wlp4s0/operstate | grep up ` ]]; then nm-applet; fi'"
-exec --no-startup-id mate-settings-daemon
+exec --no-startup-id "bash -c 'if ! [[ `cat /sys/class/net/wlp3s0/operstate | grep up ` ]]; then nm-applet; fi'"
+##exec --no-startup-id mate-settings-daemon
 #exec --no-startup-id synapse -s
 
 # Hot corners:
@@ -247,12 +249,12 @@ exec --no-startup-id mate-settings-daemon
 #exec --no-startup-id compton -b --conf ~/.config/i3/compton
 #exec --no-startup-id rofi -key-run F12 -font "Inconsolata 14" -opacity 97
 #exec --no-startup-id rofi -key-window Alt+Tab -font "Inconsolata 14" -opacity 97
-exec --no-startup-id python3 /home/awesam/.config/i3/scripts/autoname-workspaces.py
+exec --no-startup-id python3 /home/hreitani/.config/i3/scripts/autoname-workspaces.py
 # exec --no-startup-id "sh -c 'sleep 5; exec ~/.dropbox-dist/dropboxd'"
 #exec --no-startup-id dropbox start
 #exec --no-startup-id insync start
 exec --no-startup-id redshift -l 25.17:55.31
-exec --no-startup-id xautolock -time 5 -bell 0 -detectsleep -locker ~/.config/i3/scripts/blurred-lock -notify 5 -notifier "notify-send -t 1000 -i ~/.config/i3/icons/lock-icon.png 'Locking Screen...'"
+exec --no-startup-id xautolock -time 10 -bell 0 -detectsleep -locker ~/.config/i3/scripts/blurred-lock -notify 9 -notifier "notify-send -t 1000 -i ~/.config/i3/icons/lock-icon.png 'Locking Screen...'"
 
 # Start on workspace 1:
 exec --no-startupid i3-msg 'workspace $w1'

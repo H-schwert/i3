@@ -1,5 +1,5 @@
 #!/bin/bash
 echo ""$(date "+%A, %e. %B, %H:%M")
-#if [[ $BLOCK_BUTTON == '1' ]]; then
-#        firefox https://www.google.com/calendar
-#fi
+if [[ $BLOCK_BUTTON == '1' ]]; then
+        firefox https://outlook.office.com/owa/?realm=nokia.com&exsvurl=1&ll-cc=1033&modurl=0&path=/calendar/view/Month
+fi

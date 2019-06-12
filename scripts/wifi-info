@@ -1,11 +1,11 @@
 #!/bin/bash
 
-SSID=`sudo iwconfig wlp4s0 | grep "ESSID" | cut -d ":" -f2`
-FREQ=`sudo iwconfig wlp4s0 | grep Frequency | cut -d 'G' -f1 | cut -d ':' -f3`
-LOCAL_IP=`sudo ifconfig wlp4s0 | grep 'inet addr' | cut -d ":" -f2 | cut -d "B" -f1`
+SSID=`sudo iwconfig wlp3s0 | grep "ESSID" | cut -d ":" -f2`
+FREQ=`sudo iwconfig wlp3s0 | grep Frequency | cut -d 'G' -f1 | cut -d ':' -f3`
+LOCAL_IP=`sudo ifconfig wlp3s0 | grep 'inet addr' | cut -d ":" -f2 | cut -d "B" -f1`
 
 echo "SSID:" $SSID
 echo "Frequency:    "
 echo $FREQ
 echo "Local IP:     " $LOCAL_IP
-macchanger wlp4s0 -s
+macchanger wlp3s0 -s

@@ -8,20 +8,29 @@ import pandas as pd
 import urllib
 
 # forecast.io api key:
-f = open('/home/christoph/.config/forecast-io-key')
+f = open('/home/hreitani/.config/forecast-io-key')
 key = f.readline().rstrip()
+f.close()
+
+# ipstack.com api key:
+f = open('/home/hreitani/.config/ipstack-geoloc-key')
+key1 = f.readline().rstrip()
 f.close()
 
 # Get current longitude and latitude based on IP address:
 ip = requests.get('http://ipinfo.io/ip').text.rstrip()
-loc = geocoder.freegeoip(ip)
-city = loc.locality
+loc_url = 'http://api.ipstack.com/'
+loc = requests.get(loc_url + ip + '?access_key=' + key1)  
+loc = loc.json()
+#print(loc['latitude'])
+city = loc['city']
 if city == None:
     city = geocoder.google([loc.lat, loc.lng], method='reverse').city
 
 # Get weather info:
-root_url = 'https://api.forecast.io/forecast/'
-weather = requests.get(root_url + key + '/' + str(loc.lat) + ',' + str(loc.lng))
+#root_url = 'https://api.forecast.io/forecast/'
+root_url = 'https://api.darksky.net/forecast/'
+weather = requests.get(root_url + key + '/' + str(loc['latitude']) + ',' + str(loc['longitude']))
 weather = json.loads(weather.text)
 
 # Convert temperature to Celcius:
